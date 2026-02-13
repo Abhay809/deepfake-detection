@@ -1,0 +1,8 @@
+# Streamlit config (used when running locally; Cloud uses its own)
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false

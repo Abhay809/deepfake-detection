@@ -1,0 +1,37 @@
+# DeepFake Detection - Configuration
+
+project:
+  name: "DeepFake Detection and Prevention"
+  seed: 42
+
+data:
+  image_size: 224
+  batch_size: 32
+  num_workers: 4
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+  # Place your dataset in: data/real/ and data/fake/ (or data/authentic/ and data/manipulated/)
+  real_dir: "data/real"
+  fake_dir: "data/fake"
+
+model:
+  backbone: "efficientnet_b0"  # efficientnet_b0, resnet50, mobilenet_v3_small
+  pretrained: true
+  num_classes: 2  # real, fake
+  dropout: 0.3
+  freeze_backbone_epochs: 2  # transfer learning: freeze then unfreeze
+
+training:
+  epochs: 20
+  learning_rate: 1.0e-3
+  weight_decay: 1.0e-4
+  lr_scheduler: "cosine"  # cosine, step, plateau
+  early_stopping_patience: 5
+  checkpoint_dir: "checkpoints"
+  best_metric: "val_accuracy"
+
+preprocessing:
+  use_frequency_features: true   # FFT-based artifact detection
+  use_texture_features: true     # texture inconsistency cues
+  augment: true                  # train-time augmentation
